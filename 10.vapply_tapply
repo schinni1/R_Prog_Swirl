@@ -1,0 +1,207 @@
+Selection:     1
+
+| Please choose a lesson, or type 0 to return to course menu.
+
+ 1: Basic Building Blocks      2: Workspace and Files        3: Sequences of Numbers       4: Vectors                 
+ 5: Missing Values             6: Subsetting Vectors         7: Matrices and Data Frames   8: Logic                   
+ 9: Functions                 10: lapply and sapply         11: vapply and tapply         12: Looking at Data         
+13: Simulation                14: Dates and Times           15: Base Graphics             
+
+Selection: 11
+
+  |                                                                                                                   |   0%
+
+| In the last lesson, you learned about the two most fundamental members of R's *apply family of functions: lapply() and
+| sapply(). Both take a list as input, apply a function to each element of the list, then combine and return the result.
+| lapply() always returns a list, whereas sapply() attempts to simplify the result.
+
+...
+
+  |=====                                                                                                              |   4%
+
+| In this lesson, you'll learn how to use vapply() and tapply(), each of which serves a very specific purpose within the
+| Split-Apply-Combine methodology. For consistency, we'll use the same dataset we used in the 'lapply and sapply' lesson.
+
+...
+
+  |==========                                                                                                         |   8%
+
+| The Flags dataset from the UCI Machine Learning Repository contains details of various nations and their flags. More
+| information may be found here: http://archive.ics.uci.edu/ml/datasets/Flags
+
+...
+
+  |==============                                                                                                     |  12%
+
+| I've stored the data in a variable called flags. If it's been a while since you completed the 'lapply and sapply' lesson,
+| you may want to reacquaint yourself with the data by using functions like dim(), head(), str(), and summary() when you
+| return to the prompt (>). You can also type viewinfo() at the prompt to bring up some documentation for the dataset. Let's
+| get started!
+
+...
+
+  |===================                                                                                                |  17%
+
+| As you saw in the last lesson, the unique() function returns a vector of the unique values contained in the object passed
+| to it. Therefore, sapply(flags, unique) returns a list containing one vector of unique values for each column of the flags
+| dataset. Try it again now.
+
+> 
+> sapply(flags, unique)
+$name
+  [1] Afghanistan              Albania                  Algeria                  American-Samoa          
+  [5] Andorra                  Angola                   Anguilla                 Antigua-Barbuda         
+  [9] Argentina                Argentine                Australia                Austria                 
+ [13] Bahamas                  Bahrain                  Bangladesh               Barbados                
+ [17] Belgium                  Belize                   Benin                    Bermuda                 
+ [21] Bhutan                   Bolivia                  Botswana                 Brazil                  
+ [25] British-Virgin-Isles     Brunei                   Bulgaria                 Burkina                 
+ [29] Burma                    Burundi                  Cameroon                 Canada                  
+ [33] Cape-Verde-Islands       Cayman-Islands           Central-African-Republic Chad                    
+ [37] Chile                    China                    Colombia                 Comorro-Islands         
+ [41] Congo                    Cook-Islands             Costa-Rica               Cuba                    
+ [45] Cyprus                   Czechoslovakia           Denmark                  Djibouti                
+ [49] Dominica                 Dominican-Republic       Ecuador                  Egypt                   
+ [53] El-Salvador              Equatorial-Guinea        Ethiopia                 Faeroes                 
+ [57] Falklands-Malvinas       Fiji                     Finland                  France                  
+ [61] French-Guiana            French-Polynesia         Gabon                    Gambia                  
+ [65] Germany-DDR              Germany-FRG              Ghana                    Gibraltar               
+ [69] Greece                   Greenland                Grenada                  Guam                    
+ [73] Guatemala                Guinea                   Guinea-Bissau            Guyana                  
+ [77] Haiti                    Honduras                 Hong-Kong                Hungary                 
+ [81] Iceland                  India                    Indonesia                Iran                    
+ [85] Iraq                     Ireland                  Israel                   Italy                   
+ [89] Ivory-Coast              Jamaica                  Japan                    Jordan                  
+ [93] Kampuchea                Kenya                    Kiribati                 Kuwait                  
+ [97] Laos                     Lebanon                  Lesotho                  Liberia                 
+[101] Libya                    Liechtenstein            Luxembourg               Malagasy                
+[105] Malawi                   Malaysia                 Maldive-Islands          Mali                    
+[109] Malta                    Marianas                 Mauritania               Mauritius               
+[113] Mexico                   Micronesia               Monaco                   Mongolia                
+[117] Montserrat               Morocco                  Mozambique               Nauru                   
+[121] Nepal                    Netherlands              Netherlands-Antilles     New-Zealand             
+[125] Nicaragua                Niger                    Nigeria                  Niue                    
+[129] North-Korea              North-Yemen              Norway                   Oman                    
+[133] Pakistan                 Panama                   Papua-New-Guinea         Parguay                 
+[137] Peru                     Philippines              Poland                   Portugal                
+[141] Puerto-Rico              Qatar                    Romania                  Rwanda                  
+[145] San-Marino               Sao-Tome                 Saudi-Arabia             Senegal                 
+[149] Seychelles               Sierra-Leone             Singapore                Soloman-Islands         
+[153] Somalia                  South-Africa             South-Korea              South-Yemen             
+[157] Spain                    Sri-Lanka                St-Helena                St-Kitts-Nevis          
+[161] St-Lucia                 St-Vincent               Sudan                    Surinam                 
+[165] Swaziland                Sweden                   Switzerland              Syria                   
+[169] Taiwan                   Tanzania                 Thailand                 Togo                    
+[173] Tonga                    Trinidad-Tobago          Tunisia                  Turkey                  
+[177] Turks-Cocos-Islands      Tuvalu                   UAE                      Uganda                  
+[181] UK                       Uruguay                  US-Virgin-Isles          USA                     
+[185] USSR                     Vanuatu                  Vatican-City             Venezuela               
+[189] Vietnam                  Western-Samoa            Yugoslavia               Zaire                   
+[193] Zambia                   Zimbabwe                
+194 Levels: Afghanistan Albania Algeria American-Samoa Andorra Angola Anguilla Antigua-Barbuda Argentina ... Zimbabwe
+
+$landmass
+[1] 5 3 4 6 1 2
+
+$zone
+[1] 1 3 2 4
+
+$area
+  [1]   648    29  2388     0  1247  2777  7690    84    19     1   143    31    23   113    47  1099   600  8512     6   111
+ [21]   274   678    28   474  9976     4   623  1284   757  9561  1139     2   342    51   115     9   128    43    22    49
+ [41]   284  1001    21  1222    12    18   337   547    91   268    10   108   249   239   132  2176   109   246    36   215
+ [61]   112    93   103  3268  1904  1648   435    70   301   323    11   372    98   181   583   236    30  1760     3   587
+ [81]   118   333  1240  1031  1973  1566   447   783   140    41  1267   925   121   195   324   212   804    76   463   407
+[101]  1285   300   313    92   237    26  2150   196    72   637  1221    99   288   505    66  2506    63    17   450   185
+[121]   945   514    57     5   164   781   245   178  9363 22402    15   912   256   905   753   391
+
+$population
+ [1]   16    3   20    0    7   28   15    8   90   10    1    6  119    9   35    4   24    2   11 1008    5   47   31   54
+[25]   17   61   14  684  157   39   57  118   13   77   12   56   18   84   48   36   22   29   38   49   45  231  274   60
+
+$language
+ [1] 10  6  8  1  2  4  3  5  7  9
+
+$religion
+[1] 2 6 1 0 5 3 4 7
+
+$bars
+[1] 0 2 3 1 5
+
+$stripes
+ [1]  3  0  2  1  5  9 11 14  4  6 13  7
+
+$colours
+[1] 5 3 2 8 6 4 7 1
+
+$red
+[1] 1 0
+
+$green
+[1] 1 0
+
+$blue
+[1] 0 1
+
+$gold
+[1] 1 0
+
+$white
+[1] 1 0
+
+$black
+[1] 1 0
+
+$orange
+[1] 0 1
+
+$mainhue
+[1] green  red    blue   gold   white  orange black  brown 
+Levels: black blue brown gold green orange red white
+
+$circles
+[1] 0 1 4 2
+
+$crosses
+[1] 0 1 2
+
+$saltires
+[1] 0 1
+
+$quarters
+[1] 0 1 4
+
+$sunstars
+ [1]  1  0  6 22 14  3  4  5 15 10  7  2  9 50
+
+$crescent
+[1] 0 1
+
+$triangle
+[1] 0 1
+
+$icon
+[1] 1 0
+
+$animate
+[1] 0 1
+
+$text
+[1] 0 1
+
+$topleft
+[1] black  red    green  blue   white  orange gold  
+Levels: black blue gold green orange red white
+
+$botright
+[1] green  red    white  black  blue   gold   orange brown 
+Levels: black blue brown gold green orange red white
+
+
+| That's correct!
+
+  |========================                                                                                           |  21%
+
+| What if you had forgotten how unique() works and mistakenly thought it returns the *number* of unique values contained in
+| the object passed to it? Then you might have incorrectly expected sapply(flags, unique) to return a numeric vector, since
+| each element of the list returned would contain a single number and sapply() could then simplify the result to a vector.
