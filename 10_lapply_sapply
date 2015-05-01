@@ -1,0 +1,998 @@
+| Use class(cls_vect) to confirm that sapply() simplified the result to a character vector.
+
+> class(cls_vect)
+[1] "character"
+
+| You are amazing!
+
+  |==========================================                                                                         |  37%
+
+| In general, if the result is a list where every element is of length one, then sapply() returns a vector. If the result is
+| a list where every element is a vector of the same length (> 1), sapply() returns a matrix. If sapply() can't figure
+| things out, then it just returns a list, no different from what lapply() would give you.
+
+...
+
+  |=============================================                                                                      |  39%
+
+| Let's practice using lapply() and sapply() some more!
+
+...
+
+  |===============================================                                                                    |  41%
+
+| Columns 11 through 17 of our dataset are indicator variables, each representing a different color. The value of the
+| indicator variable is 1 if the color is present in a country's flag and 0 otherwise.
+
+...
+
+  |=================================================                                                                  |  43%
+
+| Therefore, if we want to know the total number of countries (in our dataset) with, for example, the color orange on their
+| flag, we can just add up all of the 1s and 0s in the 'orange' column. Try sum(flags$orange) to see this.
+
+> sum(flags$orange)
+[1] 26
+
+| You are quite good my friend!
+
+  |====================================================                                                               |  45%
+
+| Now we want to repeat this operation for each of the colors recorded in the dataset.
+
+...
+
+  |======================================================                                                             |  47%
+
+| First, use flag_colors <- flags[, 11:17] to extract the columns containing the color data and store them in a new data
+| frame called flag_colors. (Note the comma before 11:17. This subsetting command tells R that we want all rows, but only
+| columns 11 through 17.)
+
+> flag_colors <- flags[, 11:17]
+
+| Nice work!
+
+  |========================================================                                                           |  49%
+
+| Use the head() function to look at the first 6 lines of flag_colors.
+
+> head(flag_colors)
+  red green blue gold white black orange
+1   1     1    0    1     1     1      0
+2   1     0    0    1     0     1      0
+3   1     1    0    0     1     0      0
+4   1     0    1    1     1     0      1
+5   1     0    1    1     0     0      0
+6   1     0    0    1     0     1      0
+
+| You are doing so well!
+
+  |===========================================================                                                        |  51%
+
+| To get a list containing the sum of each column of flag_colors, call the lapply() function with two arguments. The first
+| argument is the object over which we are looping (i.e. flag_colors) and the second argument is the name of the function we
+| wish to apply to each column (i.e. sum). Remember that the second argument is just the name of the function with no
+| parentheses, etc.
+
+> lapply(flag_colors, sum)
+$red
+[1] 153
+
+$green
+[1] 91
+
+$blue
+[1] 99
+
+$gold
+[1] 91
+
+$white
+[1] 146
+
+$black
+[1] 52
+
+$orange
+[1] 26
+
+
+| Excellent work!
+
+  |=============================================================                                                      |  53%
+
+| This tells us that of the 194 flags in our dataset, 153 contain the color red, 91 contain green, 99 contain blue, and so
+| on.
+
+...
+
+  |===============================================================                                                    |  55%
+
+| The result is a list, since lapply() always returns a list. Each element of this list is of length one, so the result can
+| be simplified to a vector by calling sapply() instead of lapply(). Try it now.
+
+> sapply(flag_colors, sum)
+   red  green   blue   gold  white  black orange 
+   153     91     99     91    146     52     26 
+
+| Keep working like that and you'll get there!
+
+  |==================================================================                                                 |  57%
+
+| Perhaps it's more informative to find the proportion of flags (out of 194) containing each color. Since each column is
+| just a bunch of 1s and 0s, the arithmetic mean of each column will give us the proportion of 1s. (If it's not clear why,
+| think of a simpler situation where you have three 1s and two 0s -- (1 + 1 + 1 + 0 + 0)/5 = 3/5 = 0.6).
+
+...
+
+  |====================================================================                                               |  59%
+
+| Use sapply() to apply the mean() function to each column of flag_colors. Remember that the second argument to sapply()
+| should just specify the name of the function (i.e. mean) that you want to apply.
+
+> sapply(flag_colrs, mean)
+Error in lapply(X = X, FUN = FUN, ...) : object 'flag_colrs' not found
+> sapply(flag_colors, mean)
+      red     green      blue      gold     white     black    orange 
+0.7886598 0.4690722 0.5103093 0.4690722 0.7525773 0.2680412 0.1340206 
+
+| You are really on a roll!
+
+  |======================================================================                                             |  61%
+
+| In the examples we've looked at so far, sapply() has been able to simplify the result to vector. That's because each
+| element of the list returned by lapply() was a vector of length one. Recall that sapply() instead returns a matrix when
+| each element of the list returned by lapply() is a vector of the same length (> 1).
+
+...
+
+  |=========================================================================                                          |  63%
+
+| To illustrate this, let's extract columns 19 through 23 from the flags dataset and store the result in a new data frame
+| called flag_shapes. flag_shapes <- flags[, 19:23] will do it.
+
+> flag_shapes <- flags[, 19:23]
+
+| All that practice is paying off!
+
+  |===========================================================================                                        |  65%
+
+| Each of these columns (i.e. variables) represents the number of times a particular shape or design appears on a country's
+| flag. We are interested in the minimum and maximum number of times each shape or design appears.
+
+...
+
+  |=============================================================================                                      |  67%
+
+| The range() function returns the minimum and maximum of its first argument, which should be a numeric vector. Use lapply()
+| to apply the range function to each column of flag_shapes. Don't worry about storing the result in a new variable. By now,
+| we know that lapply() always returns a list.
+
+> lapply(flag_Shapes, range)
+Error in lapply(flag_Shapes, range) : object 'flag_Shapes' not found
+> flag_shapes
+    circles crosses saltires quarters sunstars
+1         0       0        0        0        1
+2         0       0        0        0        1
+3         0       0        0        0        1
+4         0       0        0        0        0
+5         0       0        0        0        0
+6         0       0        0        0        1
+7         0       0        0        0        0
+8         0       0        0        0        1
+9         0       0        0        0        0
+10        0       0        0        0        1
+11        0       1        1        1        6
+12        0       0        0        0        0
+13        0       0        0        0        0
+14        0       0        0        0        0
+15        1       0        0        0        0
+16        0       0        0        0        0
+17        0       0        0        0        0
+18        1       0        0        0        0
+19        0       0        0        0        1
+20        1       1        1        1        0
+21        4       0        0        0        0
+22        0       0        0        0        0
+23        0       0        0        0        0
+24        1       0        0        0       22
+25        0       1        1        1        0
+26        0       0        0        0        0
+27        0       0        0        0        1
+28        0       0        0        0        1
+29        0       0        0        1       14
+30        1       0        1        0        3
+31        0       0        0        0        1
+32        0       0        0        0        0
+33        0       0        0        0        1
+34        1       1        1        1        4
+35        0       0        0        0        1
+36        0       0        0        0        0
+37        0       0        0        1        1
+38        0       0        0        0        5
+39        0       0        0        0        0
+40        0       0        0        0        4
+41        0       0        0        0        1
+42        1       1        1        1       15
+43        0       0        0        0        0
+44        0       0        0        0        1
+45        0       0        0        0        0
+46        0       0        0        0        0
+47        0       1        0        0        0
+48        0       0        0        0        1
+49        1       0        0        0       10
+50        0       1        0        0        0
+51        0       0        0        0        0
+52        0       0        0        0        0
+53        0       0        0        0        0
+54        0       0        0        0        0
+55        0       0        0        0        0
+56        0       1        0        0        0
+57        1       1        1        1        0
+58        0       2        1        1        0
+59        0       1        0        0        0
+60        0       0        0        0        0
+61        0       0        0        0        0
+62        1       0        0        0        1
+63        0       0        0        0        0
+64        0       0        0        0        0
+65        0       0        0        0        0
+66        0       0        0        0        0
+67        0       0        0        0        1
+68        0       0        0        0        0
+69        0       1        0        1        0
+70        1       0        0        0        0
+71        1       0        0        0        7
+72        0       0        0        0        0
+73        0       0        0        0        0
+74        0       0        0        0        0
+75        0       0        0        0        1
+76        0       0        0        0        0
+77        0       0        0        0        0
+78        0       0        0        0        5
+79        1       1        1        1        0
+80        0       0        0        0        0
+81        0       1        0        0        0
+82        1       0        0        0        0
+83        0       0        0        0        0
+84        0       0        0        0        0
+85        0       0        0        0        3
+86        0       0        0        0        0
+87        0       0        0        0        1
+88        0       0        0        0        0
+89        0       0        0        0        0
+90        0       0        1        0        0
+91        1       0        0        0        1
+92        0       0        0        0        1
+93        0       0        0        0        0
+94        1       0        0        0        0
+95        0       0        0        0        1
+96        0       0        0        0        0
+97        1       0        0        0        0
+98        0       0        0        0        0
+99        0       0        0        0        0
+100       0       0        0        1        1
+101       0       0        0        0        0
+102       0       0        0        0        0
+103       0       0        0        0        0
+104       0       0        0        0        0
+105       0       0        0        0        1
+106       0       0        0        1        1
+107       0       0        0        0        0
+108       0       0        0        0        0
+109       0       1        0        0        0
+110       0       0        0        0        1
+111       0       0        0        0        1
+112       0       0        0        0        0
+113       0       0        0        0        0
+114       0       0        0        0        4
+115       0       0        0        0        0
+116       2       0        0        0        1
+117       0       2        1        1        0
+118       0       0        0        0        1
+119       0       0        0        0        1
+120       0       0        0        0        1
+121       0       0        0        0        2
+122       0       0        0        0        0
+123       0       0        0        0        6
+124       0       1        1        1        4
+125       0       0        0        0        0
+126       1       0        0        0        0
+127       0       0        0        0        0
+128       1       1        1        1        5
+129       1       0        0        0        1
+130       0       0        0        0        1
+131       0       1        0        0        0
+132       0       0        0        0        0
+133       0       0        0        0        1
+134       0       0        0        4        2
+135       0       0        0        0        5
+136       1       0        0        0        1
+137       0       0        0        0        0
+138       0       0        0        0        4
+139       0       0        0        0        0
+140       1       0        0        0        0
+141       0       0        0        0        1
+142       0       0        0        0        0
+143       0       0        0        0        2
+144       0       0        0        0        0
+145       0       0        0        0        0
+146       0       0        0        0        2
+147       0       0        0        0        0
+148       0       0        0        0        1
+149       0       0        0        0        0
+150       0       0        0        0        0
+151       0       0        0        0        5
+152       0       0        0        0        5
+153       0       0        0        0        1
+154       0       1        1        0        0
+155       1       0        0        0        0
+156       0       0        0        0        1
+157       0       0        0        0        0
+158       0       0        0        0        0
+159       0       1        1        1        0
+160       0       0        0        0        2
+161       0       0        0        0        0
+162       0       0        0        0        0
+163       0       0        0        0        0
+164       0       0        0        0        1
+165       0       0        0        0        0
+166       0       1        0        0        0
+167       0       1        0        0        0
+168       0       0        0        0        2
+169       1       0        0        1        1
+170       0       0        0        0        0
+171       0       0        0        0        0
+172       0       0        0        1        1
+173       0       1        0        1        0
+174       0       0        0        0        0
+175       1       0        0        0        1
+176       0       0        0        0        1
+177       0       1        1        1        0
+178       0       1        1        1        9
+179       0       0        0        0        0
+180       1       0        0        0        0
+181       0       1        1        0        0
+182       0       0        0        1        1
+183       0       0        0        0        0
+184       0       0        0        1       50
+185       0       0        0        0        1
+186       0       0        0        0        0
+187       0       0        0        0        0
+188       0       0        0        0        7
+189       0       0        0        0        1
+190       0       0        0        1        5
+191       0       0        0        0        1
+192       1       0        0        0        0
+193       0       0        0        0        0
+194       0       0        0        0        1
+
+| Try again. Getting it right on the first try is boring anyway! Or, type info() for more options.
+
+| Try lapply(flag_shapes, range) to apply the range() function to each column of flag_shapes.
+
+> lapply(flag_shapes, range)
+$circles
+[1] 0 4
+
+$crosses
+[1] 0 2
+
+$saltires
+[1] 0 1
+
+$quarters
+[1] 0 4
+
+$sunstars
+[1]  0 50
+
+
+| That's correct!
+
+  |================================================================================                                   |  69%
+
+| Do the same operation, but using sapply() and store the result in a variable called shape_mat.
+
+> sapply(flag_shapes, range)
+     circles crosses saltires quarters sunstars
+[1,]       0       0        0        0        0
+[2,]       4       2        1        4       50
+
+| Keep trying! Or, type info() for more options.
+
+| shape_mat <- sapply(flag_shapes, range) will apply the range() function to each column of flag_shapes and store the result
+| in shape_mat.
+
+> shape_mat <- sapply(flag_shapes, range) 
+
+| You nailed it! Good job!
+
+  |==================================================================================                                 |  71%
+
+| View the contents of shape_mat.
+
+> shat_mat
+Error: object 'shat_mat' not found
+> shape_mat
+     circles crosses saltires quarters sunstars
+[1,]       0       0        0        0        0
+[2,]       4       2        1        4       50
+
+| All that hard work is paying off!
+
+  |====================================================================================                               |  73%
+
+| Each column of shape_mat gives the minimum (row 1) and maximum (row 2) number of times its respective shape appears in
+| different flags.
+
+...
+
+  |=======================================================================================                            |  76%
+
+| Use the class() function to confirm that shape_mat is a matrix.
+
+> class(shape_mat)
+[1] "matrix"
+
+| You got it!
+
+  |=========================================================================================                          |  78%
+
+| As we've seen, sapply() always attempts to simplify the result given by lapply(). It has been successful in doing so for
+| each of the examples we've looked at so far. Let's look at an example where sapply() can't figure out how to simplify the
+| result and thus returns a list, no different from lapply().
+
+...
+
+  |============================================================================================                       |  80%
+
+| When given a vector, the unique() function returns a vector with all duplicate elements removed. In other words, unique()
+| returns a vector of only the 'unique' elements. To see how it works, try unique(c(3, 4, 5, 5, 5, 6, 6)).
+
+> unique(c(3, 4, 5, 5, 5, 6, 6))
+[1] 3 4 5 6
+
+| You are really on a roll!
+
+  |==============================================================================================                     |  82%
+
+| We want to know the unique values for each variable in the flags dataset. To accomplish this, use lapply() to apply the
+| unique() function to each column in the flags dataset, storing the result in a variable called unique_vals.
+
+> unique_vals <- lapply(fag_mat, unique)
+Error in lapply(fag_mat, unique) : object 'fag_mat' not found
+> unique_vals <- lapply(flag_mat, unique)
+Error in lapply(flag_mat, unique) : object 'flag_mat' not found
+> unique_vals <- lapply(flag, unique)
+Error in lapply(flag, unique) : object 'flag' not found
+> unique_vals <- lapply(flags, unique)
+
+| You nailed it! Good job!
+
+  |================================================================================================                   |  84%
+
+| Print the value of unique_vals to the console.
+
+> unique_vals
+$name
+  [1] Afghanistan              Albania                  Algeria                  American-Samoa          
+  [5] Andorra                  Angola                   Anguilla                 Antigua-Barbuda         
+  [9] Argentina                Argentine                Australia                Austria                 
+ [13] Bahamas                  Bahrain                  Bangladesh               Barbados                
+ [17] Belgium                  Belize                   Benin                    Bermuda                 
+ [21] Bhutan                   Bolivia                  Botswana                 Brazil                  
+ [25] British-Virgin-Isles     Brunei                   Bulgaria                 Burkina                 
+ [29] Burma                    Burundi                  Cameroon                 Canada                  
+ [33] Cape-Verde-Islands       Cayman-Islands           Central-African-Republic Chad                    
+ [37] Chile                    China                    Colombia                 Comorro-Islands         
+ [41] Congo                    Cook-Islands             Costa-Rica               Cuba                    
+ [45] Cyprus                   Czechoslovakia           Denmark                  Djibouti                
+ [49] Dominica                 Dominican-Republic       Ecuador                  Egypt                   
+ [53] El-Salvador              Equatorial-Guinea        Ethiopia                 Faeroes                 
+ [57] Falklands-Malvinas       Fiji                     Finland                  France                  
+ [61] French-Guiana            French-Polynesia         Gabon                    Gambia                  
+ [65] Germany-DDR              Germany-FRG              Ghana                    Gibraltar               
+ [69] Greece                   Greenland                Grenada                  Guam                    
+ [73] Guatemala                Guinea                   Guinea-Bissau            Guyana                  
+ [77] Haiti                    Honduras                 Hong-Kong                Hungary                 
+ [81] Iceland                  India                    Indonesia                Iran                    
+ [85] Iraq                     Ireland                  Israel                   Italy                   
+ [89] Ivory-Coast              Jamaica                  Japan                    Jordan                  
+ [93] Kampuchea                Kenya                    Kiribati                 Kuwait                  
+ [97] Laos                     Lebanon                  Lesotho                  Liberia                 
+[101] Libya                    Liechtenstein            Luxembourg               Malagasy                
+[105] Malawi                   Malaysia                 Maldive-Islands          Mali                    
+[109] Malta                    Marianas                 Mauritania               Mauritius               
+[113] Mexico                   Micronesia               Monaco                   Mongolia                
+[117] Montserrat               Morocco                  Mozambique               Nauru                   
+[121] Nepal                    Netherlands              Netherlands-Antilles     New-Zealand             
+[125] Nicaragua                Niger                    Nigeria                  Niue                    
+[129] North-Korea              North-Yemen              Norway                   Oman                    
+[133] Pakistan                 Panama                   Papua-New-Guinea         Parguay                 
+[137] Peru                     Philippines              Poland                   Portugal                
+[141] Puerto-Rico              Qatar                    Romania                  Rwanda                  
+[145] San-Marino               Sao-Tome                 Saudi-Arabia             Senegal                 
+[149] Seychelles               Sierra-Leone             Singapore                Soloman-Islands         
+[153] Somalia                  South-Africa             South-Korea              South-Yemen             
+[157] Spain                    Sri-Lanka                St-Helena                St-Kitts-Nevis          
+[161] St-Lucia                 St-Vincent               Sudan                    Surinam                 
+[165] Swaziland                Sweden                   Switzerland              Syria                   
+[169] Taiwan                   Tanzania                 Thailand                 Togo                    
+[173] Tonga                    Trinidad-Tobago          Tunisia                  Turkey                  
+[177] Turks-Cocos-Islands      Tuvalu                   UAE                      Uganda                  
+[181] UK                       Uruguay                  US-Virgin-Isles          USA                     
+[185] USSR                     Vanuatu                  Vatican-City             Venezuela               
+[189] Vietnam                  Western-Samoa            Yugoslavia               Zaire                   
+[193] Zambia                   Zimbabwe                
+194 Levels: Afghanistan Albania Algeria American-Samoa Andorra Angola Anguilla Antigua-Barbuda Argentina ... Zimbabwe
+
+$landmass
+[1] 5 3 4 6 1 2
+
+$zone
+[1] 1 3 2 4
+
+$area
+  [1]   648    29  2388     0  1247  2777  7690    84    19     1   143    31    23   113    47  1099   600  8512     6   111
+ [21]   274   678    28   474  9976     4   623  1284   757  9561  1139     2   342    51   115     9   128    43    22    49
+ [41]   284  1001    21  1222    12    18   337   547    91   268    10   108   249   239   132  2176   109   246    36   215
+ [61]   112    93   103  3268  1904  1648   435    70   301   323    11   372    98   181   583   236    30  1760     3   587
+ [81]   118   333  1240  1031  1973  1566   447   783   140    41  1267   925   121   195   324   212   804    76   463   407
+[101]  1285   300   313    92   237    26  2150   196    72   637  1221    99   288   505    66  2506    63    17   450   185
+[121]   945   514    57     5   164   781   245   178  9363 22402    15   912   256   905   753   391
+
+$population
+ [1]   16    3   20    0    7   28   15    8   90   10    1    6  119    9   35    4   24    2   11 1008    5   47   31   54
+[25]   17   61   14  684  157   39   57  118   13   77   12   56   18   84   48   36   22   29   38   49   45  231  274   60
+
+$language
+ [1] 10  6  8  1  2  4  3  5  7  9
+
+$religion
+[1] 2 6 1 0 5 3 4 7
+
+$bars
+[1] 0 2 3 1 5
+
+$stripes
+ [1]  3  0  2  1  5  9 11 14  4  6 13  7
+
+$colours
+[1] 5 3 2 8 6 4 7 1
+
+$red
+[1] 1 0
+
+$green
+[1] 1 0
+
+$blue
+[1] 0 1
+
+$gold
+[1] 1 0
+
+$white
+[1] 1 0
+
+$black
+[1] 1 0
+
+$orange
+[1] 0 1
+
+$mainhue
+[1] green  red    blue   gold   white  orange black  brown 
+Levels: black blue brown gold green orange red white
+
+$circles
+[1] 0 1 4 2
+
+$crosses
+[1] 0 1 2
+
+$saltires
+[1] 0 1
+
+$quarters
+[1] 0 1 4
+
+$sunstars
+ [1]  1  0  6 22 14  3  4  5 15 10  7  2  9 50
+
+$crescent
+[1] 0 1
+
+$triangle
+[1] 0 1
+
+$icon
+[1] 1 0
+
+$animate
+[1] 0 1
+
+$text
+[1] 0 1
+
+$topleft
+[1] black  red    green  blue   white  orange gold  
+Levels: black blue gold green orange red white
+
+$botright
+[1] green  red    white  black  blue   gold   orange brown 
+Levels: black blue brown gold green orange red white
+
+
+| You are doing so well!
+
+  |===================================================================================================                |  86%
+
+| Since unique_vals is a list, you can use what you've learned to determine the length of each element of unique_vals (i.e.
+| the number of unique values for each variable). Simplify the result, if possible. Hint: Apply the length() function to
+| each element of unique_vals.
+
+> length(unique_vals)
+[1] 30
+
+| Almost! Try again. Or, type info() for more options.
+
+| Apply the length() function to each element of the unique_vals list using sapply(). Remember, no parentheses after the
+| name of the function you are applying (i.e. length).
+
+> sapply(unique_vals, length)
+      name   landmass       zone       area population   language   religion       bars    stripes    colours        red 
+       194          6          4        136         48         10          8          5         12          8          2 
+     green       blue       gold      white      black     orange    mainhue    circles    crosses   saltires   quarters 
+         2          2          2          2          2          2          8          4          3          2          3 
+  sunstars   crescent   triangle       icon    animate       text    topleft   botright 
+        14          2          2          2          2          2          7          8 
+
+| Great job!
+
+  |=====================================================================================================              |  88%
+
+| The fact that the elements of the unique_vals list are all vectors of *different* length poses a problem for sapply(),
+| since there's no obvious way of simplifying the result.
+
+...
+
+  |=======================================================================================================            |  90%
+
+| Use sapply() to apply the unique() function to each column of the flags dataset to see that you get the same unsimplified
+| list that you got from lapply().
+
+> sapply(flags, unique)
+$name
+  [1] Afghanistan              Albania                  Algeria                  American-Samoa          
+  [5] Andorra                  Angola                   Anguilla                 Antigua-Barbuda         
+  [9] Argentina                Argentine                Australia                Austria                 
+ [13] Bahamas                  Bahrain                  Bangladesh               Barbados                
+ [17] Belgium                  Belize                   Benin                    Bermuda                 
+ [21] Bhutan                   Bolivia                  Botswana                 Brazil                  
+ [25] British-Virgin-Isles     Brunei                   Bulgaria                 Burkina                 
+ [29] Burma                    Burundi                  Cameroon                 Canada                  
+ [33] Cape-Verde-Islands       Cayman-Islands           Central-African-Republic Chad                    
+ [37] Chile                    China                    Colombia                 Comorro-Islands         
+ [41] Congo                    Cook-Islands             Costa-Rica               Cuba                    
+ [45] Cyprus                   Czechoslovakia           Denmark                  Djibouti                
+ [49] Dominica                 Dominican-Republic       Ecuador                  Egypt                   
+ [53] El-Salvador              Equatorial-Guinea        Ethiopia                 Faeroes                 
+ [57] Falklands-Malvinas       Fiji                     Finland                  France                  
+ [61] French-Guiana            French-Polynesia         Gabon                    Gambia                  
+ [65] Germany-DDR              Germany-FRG              Ghana                    Gibraltar               
+ [69] Greece                   Greenland                Grenada                  Guam                    
+ [73] Guatemala                Guinea                   Guinea-Bissau            Guyana                  
+ [77] Haiti                    Honduras                 Hong-Kong                Hungary                 
+ [81] Iceland                  India                    Indonesia                Iran                    
+ [85] Iraq                     Ireland                  Israel                   Italy                   
+ [89] Ivory-Coast              Jamaica                  Japan                    Jordan                  
+ [93] Kampuchea                Kenya                    Kiribati                 Kuwait                  
+ [97] Laos                     Lebanon                  Lesotho                  Liberia                 
+[101] Libya                    Liechtenstein            Luxembourg               Malagasy                
+[105] Malawi                   Malaysia                 Maldive-Islands          Mali                    
+[109] Malta                    Marianas                 Mauritania               Mauritius               
+[113] Mexico                   Micronesia               Monaco                   Mongolia                
+[117] Montserrat               Morocco                  Mozambique               Nauru                   
+[121] Nepal                    Netherlands              Netherlands-Antilles     New-Zealand             
+[125] Nicaragua                Niger                    Nigeria                  Niue                    
+[129] North-Korea              North-Yemen              Norway                   Oman                    
+[133] Pakistan                 Panama                   Papua-New-Guinea         Parguay                 
+[137] Peru                     Philippines              Poland                   Portugal                
+[141] Puerto-Rico              Qatar                    Romania                  Rwanda                  
+[145] San-Marino               Sao-Tome                 Saudi-Arabia             Senegal                 
+[149] Seychelles               Sierra-Leone             Singapore                Soloman-Islands         
+[153] Somalia                  South-Africa             South-Korea              South-Yemen             
+[157] Spain                    Sri-Lanka                St-Helena                St-Kitts-Nevis          
+[161] St-Lucia                 St-Vincent               Sudan                    Surinam                 
+[165] Swaziland                Sweden                   Switzerland              Syria                   
+[169] Taiwan                   Tanzania                 Thailand                 Togo                    
+[173] Tonga                    Trinidad-Tobago          Tunisia                  Turkey                  
+[177] Turks-Cocos-Islands      Tuvalu                   UAE                      Uganda                  
+[181] UK                       Uruguay                  US-Virgin-Isles          USA                     
+[185] USSR                     Vanuatu                  Vatican-City             Venezuela               
+[189] Vietnam                  Western-Samoa            Yugoslavia               Zaire                   
+[193] Zambia                   Zimbabwe                
+194 Levels: Afghanistan Albania Algeria American-Samoa Andorra Angola Anguilla Antigua-Barbuda Argentina ... Zimbabwe
+
+$landmass
+[1] 5 3 4 6 1 2
+
+$zone
+[1] 1 3 2 4
+
+$area
+  [1]   648    29  2388     0  1247  2777  7690    84    19     1   143    31    23   113    47  1099   600  8512     6   111
+ [21]   274   678    28   474  9976     4   623  1284   757  9561  1139     2   342    51   115     9   128    43    22    49
+ [41]   284  1001    21  1222    12    18   337   547    91   268    10   108   249   239   132  2176   109   246    36   215
+ [61]   112    93   103  3268  1904  1648   435    70   301   323    11   372    98   181   583   236    30  1760     3   587
+ [81]   118   333  1240  1031  1973  1566   447   783   140    41  1267   925   121   195   324   212   804    76   463   407
+[101]  1285   300   313    92   237    26  2150   196    72   637  1221    99   288   505    66  2506    63    17   450   185
+[121]   945   514    57     5   164   781   245   178  9363 22402    15   912   256   905   753   391
+
+$population
+ [1]   16    3   20    0    7   28   15    8   90   10    1    6  119    9   35    4   24    2   11 1008    5   47   31   54
+[25]   17   61   14  684  157   39   57  118   13   77   12   56   18   84   48   36   22   29   38   49   45  231  274   60
+
+$language
+ [1] 10  6  8  1  2  4  3  5  7  9
+
+$religion
+[1] 2 6 1 0 5 3 4 7
+
+$bars
+[1] 0 2 3 1 5
+
+$stripes
+ [1]  3  0  2  1  5  9 11 14  4  6 13  7
+
+$colours
+[1] 5 3 2 8 6 4 7 1
+
+$red
+[1] 1 0
+
+$green
+[1] 1 0
+
+$blue
+[1] 0 1
+
+$gold
+[1] 1 0
+
+$white
+[1] 1 0
+
+$black
+[1] 1 0
+
+$orange
+[1] 0 1
+
+$mainhue
+[1] green  red    blue   gold   white  orange black  brown 
+Levels: black blue brown gold green orange red white
+
+$circles
+[1] 0 1 4 2
+
+$crosses
+[1] 0 1 2
+
+$saltires
+[1] 0 1
+
+$quarters
+[1] 0 1 4
+
+$sunstars
+ [1]  1  0  6 22 14  3  4  5 15 10  7  2  9 50
+
+$crescent
+[1] 0 1
+
+$triangle
+[1] 0 1
+
+$icon
+[1] 1 0
+
+$animate
+[1] 0 1
+
+$text
+[1] 0 1
+
+$topleft
+[1] black  red    green  blue   white  orange gold  
+Levels: black blue gold green orange red white
+
+$botright
+[1] green  red    white  black  blue   gold   orange brown 
+Levels: black blue brown gold green orange red white
+
+
+| Keep up the great work!
+
+  |==========================================================================================================         |  92%
+
+| Occasionally, you may need to apply a function that is not yet defined, thus requiring you to write your own. Writing
+| functions in R is beyond the scope of this lesson, but let's look at a quick example of how you might do so in the context
+| of loop functions.
+
+...
+
+  |============================================================================================================       |  94%
+
+| Pretend you are interested in only the second item from each element of the unique_vals list that you just created. Since
+| each element of the unique_vals list is a vector and we're not aware of any built-in function in R that returns the second
+| element of a vector, we will construct our own function.
+
+...
+
+  |==============================================================================================================     |  96%
+
+| lapply(unique_vals, function(elem) elem[2]) will return a list containing the second item from each element of the
+| unique_vals list. Note that our function takes one argument, elem, which is just a 'dummy variable' that takes on the
+| value of each element of unique_vals, in turn.
+
+> lapply(unique_vals, function(elem) elem[2])
+$name
+[1] Albania
+194 Levels: Afghanistan Albania Algeria American-Samoa Andorra Angola Anguilla Antigua-Barbuda Argentina ... Zimbabwe
+
+$landmass
+[1] 3
+
+$zone
+[1] 3
+
+$area
+[1] 29
+
+$population
+[1] 3
+
+$language
+[1] 6
+
+$religion
+[1] 6
+
+$bars
+[1] 2
+
+$stripes
+[1] 0
+
+$colours
+[1] 3
+
+$red
+[1] 0
+
+$green
+[1] 0
+
+$blue
+[1] 1
+
+$gold
+[1] 0
+
+$white
+[1] 0
+
+$black
+[1] 0
+
+$orange
+[1] 1
+
+$mainhue
+[1] red
+Levels: black blue brown gold green orange red white
+
+$circles
+[1] 1
+
+$crosses
+[1] 1
+
+$saltires
+[1] 1
+
+$quarters
+[1] 1
+
+$sunstars
+[1] 0
+
+$crescent
+[1] 1
+
+$triangle
+[1] 1
+
+$icon
+[1] 0
+
+$animate
+[1] 1
+
+$text
+[1] 1
+
+$topleft
+[1] red
+Levels: black blue gold green orange red white
+
+$botright
+[1] red
+Levels: black blue brown gold green orange red white
+
+
+| Excellent job!
+
+  |=================================================================================================================  |  98%
+
+| The only difference between previous examples and this one is that we are defining and using our own function right in the
+| call to lapply(). Our function has no name and disappears as soon as lapply() is done using it. So-called 'anonymous
+| functions' can be very useful when one of R's built-in functions isn't an option.
+
+...
+
+  |===================================================================================================================| 100%
+
+| In this lesson, you learned how to use the powerful lapply() and sapply() functions to apply an operation over the
+| elements of a list. In the next lesson, we'll take a look at some close relatives of lapply() and sapply().
+
+...
+
+| Are you currently enrolled in the Coursera course associated with this lesson?
+
+1: Yes
+2: No
+
+Selection: 1
+
+| Would you like me to notify Coursera that you've completed this lesson? If so, I'll need to get some more info from you.
+
+1: Yes
+2: No
+3: Maybe later
+
+Selection: 1
+
+| The first item I need is your Course ID. For example, if the homepage for your Coursera course was
+| 'https://class.coursera.org/rprog-001', then your course ID would be 'rprog-001' (without the quotes).
+
+Course ID: rprog-013
+Submission login (email): schinni1@gmail.com
+Submission password: asgdxrzh4y
+
+| Is the following information correct?
+
+Course ID: rprog-013
+Submission login (email): schinni1@gmail.com
+Submission password: asgdxrzh4y
+
+1: Yes, go ahead!
+2: No, I need to change something.
+
+Selection: 1
+
+| I'll try to tell Coursera you've completed this lesson now.
+
+| Great work!
+
+| I've notified Coursera that you have completed rprog-013, lapply_and_sapply.
+
+| You've reached the end of this lesson! Returning to the main menu...
+
+| Please choose a course, or type 0 to exit swirl.
+
+1: R Programming
+2: Take me to the swirl course repository!
